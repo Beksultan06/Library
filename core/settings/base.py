@@ -7,22 +7,22 @@ from core.settings.jazzmin import JAZZMIN_SETTINGS
 from dotenv import load_dotenv
 
 load_dotenv()
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = True
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 ALLOWED_HOSTS = ['*']
 
-if DEBUG:
-    try:
-        from .development import *
-    except ImportError:
-        raise ImportError("Файл development.py не найден")
-else:
-    try:
-        from .production import *
-    except ImportError:
-        raise ImportError("Файл production.py не найден")
+# if DEBUG:
+#     try:
+#         from .development import *
+#     except ImportError:
+#         raise ImportError("Файл development.py не найден")
+# else:
+#     try:
+#         from .production import *
+#     except ImportError:
+#         raise ImportError("Файл production.py не найден")
 
 THEME_APPS = [
     "jazzmin",
@@ -100,6 +100,13 @@ INSTALLED_APPS = [
     *MY_APPS,
     *LIBRARY_APPS,
 ]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'  # URL to jQuery
